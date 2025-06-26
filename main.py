@@ -149,4 +149,4 @@ def wait_until_timestamp():
 
 if __name__ == '__main__':
     wait_until_timestamp()
-    spam_limit_order(delay_sec=0.1, max_attempts=1000)
+    spam_limit_order(delay_sec=0.1, max_attempts=100)
