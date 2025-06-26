@@ -33,5 +33,8 @@ OKX_PASSPHRASE=your_passphrase
 TOKEN_SYMBOL=SAHARA-USDT
 SELL_AMOUNT=100
 SELL_PRICE=0.15
+
+# Unix час у секундах (UTC!)
+START_TIMESTAMP=1720002000
 ```
 > ⚠️ Ніколи не діліться вмістом .env файлу! Це дасть ПОВНИЙ доступ до вашого торгового акаунта OKX.

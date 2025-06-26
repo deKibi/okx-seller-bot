@@ -22,6 +22,8 @@ TOKEN_SYMBOL = os.getenv('TOKEN_SYMBOL', 'SAHARA-USDT')
 SELL_AMOUNT = os.getenv('SELL_AMOUNT', '100')
 SELL_PRICE = os.getenv('SELL_PRICE', '0.15')
 
+START_TIMESTAMP = os.getenv('START_TIMESTAMP')
+
 OKX_URL = 'https://www.okx.com'
 ENDPOINT = '/api/v5/trade/order'
 METHOD = 'POST'
@@ -38,7 +40,7 @@ def generate_signature(timestamp, method, request_path, body, secret_key):
     return base64.b64encode(mac.digest()).decode()
 
 
-def place_limit_order():
+def place_limit_sell_order():
     timestamp = get_iso_timestamp()
 
     body = json.dumps({
@@ -113,6 +115,32 @@ def spam_limit_order(max_attempts=50, delay_sec=0.3):
         print("⛔ Досягнуто ліміту спроб, ордер не був прийнятий.")
 
 
+def wait_until_timestamp(start_timestamp: str):
+    try:
+        target = int(start_timestamp)
+    except ValueError:
+        print("❌ Невірне значення START_TIMESTAMP")
+        return
+
+    print(f"🎯 Очікуємо запуск ордера о {target} (UTC timestamp)")
+
+    while True:
+        now = int(time.time())
+        remaining = target - now
+
+        if remaining <= 0:
+            print("⏰ Час настав! Починаємо виконання...")
+            break
+
+        mins, secs = divmod(remaining, 60)
+        countdown_str = f"{mins} хв {secs} сек" if mins > 0 else f"{secs} сек"
+        print(f"⏳ До запуску: {countdown_str}")  # <-- кожен рядок виводиться окремо
+
+        time.sleep(1)
+
+
 if __name__ == '__main__':
-    # place_limit_order()
-    spam_limit_order(max_attempts=100, delay_sec=0.1)
+    if START_TIMESTAMP:
+        wait_until_timestamp(START_TIMESTAMP)
+
+    spam_limit_order(delay_sec=0.1, max_attempts=5)
