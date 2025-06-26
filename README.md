@@ -44,8 +44,8 @@ OKX_PASSPHRASE=your_passphrase
 
 # Token Sell Config
 TOKEN_SYMBOL=SAHARA-USDT
-SELL_AMOUNT=100
-SELL_PRICE=0.15
+SELL_AMOUNT=4000
+SELL_PRICE=0.25
 
 # Unix час у секундах (в локальному часі вашого пристроя!)
 START_TIME_YEAR=2025
