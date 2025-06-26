@@ -1,5 +1,6 @@
 # Standard Libraries
 import os
+import datetime
 import time
 import base64
 import hmac
@@ -22,7 +23,13 @@ TOKEN_SYMBOL = os.getenv('TOKEN_SYMBOL', 'SAHARA-USDT')
 SELL_AMOUNT = os.getenv('SELL_AMOUNT', '100')
 SELL_PRICE = os.getenv('SELL_PRICE', '0.15')
 
-START_TIMESTAMP = os.getenv('START_TIMESTAMP')
+# START_TIMESTAMP = os.getenv('START_TIMESTAMP')
+START_YEAR = int(os.getenv('START_TIME_YEAR'))
+START_MONTH = int(os.getenv('START_TIME_MONTH'))
+START_DAY = int(os.getenv('START_TIME_DAY'))
+START_HOUR = int(os.getenv('START_TIME_HOUR'))
+START_MINUTES = int(os.getenv('START_TIME_MINUTES'))
+START_SECONDS = int(os.getenv('START_TIME_SECONDS'))
 
 OKX_URL = 'https://www.okx.com'
 ENDPOINT = '/api/v5/trade/order'
@@ -115,11 +122,12 @@ def spam_limit_order(max_attempts=50, delay_sec=0.3):
         print("⛔ Досягнуто ліміту спроб, ордер не був прийнятий.")
 
 
-def wait_until_timestamp(start_timestamp: str):
+def wait_until_timestamp():
     try:
-        target = int(start_timestamp)
-    except ValueError:
-        print("❌ Невірне значення START_TIMESTAMP")
+        dt = datetime.datetime(START_YEAR, START_MONTH, START_DAY, START_HOUR, START_MINUTES, START_SECONDS)
+        target = int(dt.timestamp())
+    except Exception as e:
+        print(f"❌ Неможливо створити timestamp із .env: {e}")
         return
 
     print(f"🎯 Очікуємо запуск ордера о {target} (UTC timestamp)")
@@ -140,7 +148,5 @@ def wait_until_timestamp(start_timestamp: str):
 
 
 if __name__ == '__main__':
-    if START_TIMESTAMP:
-        wait_until_timestamp(START_TIMESTAMP)
-
-    spam_limit_order(delay_sec=0.1, max_attempts=5)
+    wait_until_timestamp()
+    spam_limit_order(delay_sec=0.1, max_attempts=1000)

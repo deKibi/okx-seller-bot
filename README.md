@@ -47,7 +47,12 @@ TOKEN_SYMBOL=SAHARA-USDT
 SELL_AMOUNT=100
 SELL_PRICE=0.15
 
-# Unix час у секундах (UTC!)
-START_TIMESTAMP=1720002000
+# Unix час у секундах (в локальному часі вашого пристроя!)
+START_TIME_YEAR=2025
+START_TIME_MONTH=6
+START_TIME_DAY=26
+START_TIME_HOUR=13
+START_TIME_MINUTES=59
+START_TIME_SECONDS=59
 ```
 > ⚠️ Ніколи не діліться вмістом .env файлу! Це дасть ПОВНИЙ доступ до вашого торгового акаунта OKX.
