@@ -16,13 +16,26 @@
   - `requests`
   - `python-dotenv`
 
-Встанови залежності:
+## 🔩 Активувати venv
+- Windows
+```bash
+    python -m venv venv
+    venv\Scripts\activate
+```
 
+- macOS / Linux
+```bash
+    python3 -m venv venv
+  source venv/bin/activate
+```
+
+## 🔩️ Встанови залежності
 ```bash
     pip install -r requirements.txt
 ```
 
-## ⚙️ .env файл
+
+## 🔩 .env файл
 ```dotenv
 # OKX API Keys
 OKX_API_KEY=your_api_key
